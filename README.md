@@ -1,3 +1,3 @@
-# es2020-r1-60
-
-es2020 Elsőforduló - Tóth Bence (60)
+[https://bencus-minesweeper.netlify.com](https://bencus-minesweeper.netlify.com)<br>
+60<br>
+Tóth Bence
