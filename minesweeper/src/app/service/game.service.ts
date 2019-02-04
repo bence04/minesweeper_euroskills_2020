@@ -1,17 +1,29 @@
 import { Injectable } from '@angular/core';
-import { GameFieldEnum } from '../model/game.enum';
+import { GameFieldEnum, GameFieldModel } from '../model/game.enum';
 
 @Injectable({
   providedIn: 'root'
 })
 export class GameService {
+
+  emptyModel: GameFieldModel = {
+    value: GameFieldEnum.EMPTY,
+    isClicked: false,
+    isSelected: false
+  };
+  bombModel: GameFieldModel = {
+    value: GameFieldEnum.BOMB,
+    isClicked: false,
+    isSelected: false
+  };
+
   constructor() {}
 
   generateMap(row: number, column: number, bombs: number) {
     console.log('map gen');
     let gameMap = new Array(row * column);
-    gameMap.fill(GameFieldEnum.EMPTY);
-    gameMap.fill(GameFieldEnum.BOMB, 0, bombs);
+    gameMap.fill(this.emptyModel);
+    gameMap.fill(this.bombModel, 0, bombs);
 
     gameMap = this.arrayToMatrix(this.shuffleArray(gameMap), column);
     console.log(gameMap);

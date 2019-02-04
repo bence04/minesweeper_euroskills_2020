@@ -10,3 +10,9 @@ export enum GameFieldEnum {
   SEVEN = 7,
   EIGHT = 8
 }
+
+export interface GameFieldModel {
+  value: GameFieldEnum;
+  isClicked: boolean;
+  isSelected: boolean;
+}
