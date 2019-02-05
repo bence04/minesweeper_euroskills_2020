@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { GameService } from './service/game.service';
-import { GameFieldModel, GameFieldEnum } from './model/game.enum';
+import { GameFieldModel, GameFieldEnum, HighScoreModel } from './model/game.enum';
 import { timer, Subscription } from 'rxjs';
 
 @Component({
@@ -14,10 +14,12 @@ export class AppComponent {
   timeInSec = 0;
   allBombs = 0;
   timerSubscription: Subscription;
+  highScore: HighScoreModel[] = [];
 
   constructor(private gameService: GameService) {}
 
   newGame() {
+    this.getHighscore();
     if (this.timerSubscription !== undefined) { this.timerSubscription.unsubscribe(); }
     this.gameMap = this.gameService.generateMap(9, 9, 10);
     this.allBombs = 10;
@@ -45,6 +47,11 @@ export class AppComponent {
       }
       if (this.gameService.isLastClick(this.gameMap)) {
         this.gameFinnish();
+        this.highScore.push({name: 'asd', time: this.timeInSec});
+        const sortedHighScore = this.highScore.sort(function(e1, e2) {
+          return e1.time - e2.time;
+        }).slice(0, 5);
+        localStorage.setItem('highscores', JSON.stringify(sortedHighScore));
         alert('Nyertél');
       }
     } else {
@@ -60,8 +67,13 @@ export class AppComponent {
     this.endOfGame = true;
   }
 
+  getHighscore() {
+    const getScoreStr = localStorage.getItem('highscores');
+    if (getScoreStr !== null) {
+      this.highScore = JSON.parse(getScoreStr);
+    }
+  }
 
-  /* localStorage.setItem('key', JSON.stringify()); */
 
 
 

@@ -16,3 +16,8 @@ export interface GameFieldModel {
   isClicked: boolean;
   isSelected: boolean;
 }
+
+export interface HighScoreModel {
+  name: string;
+  time: number;
+}

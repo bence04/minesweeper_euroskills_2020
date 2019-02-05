@@ -10,7 +10,7 @@
       (contextmenu)="selectField(item, rowIndex, columnIndex)"
       (click)="clickField(item, rowIndex, columnIndex)">
       &nbsp;
-
+      <span *ngIf="item.value === -1">B</span>
     </span>
     <span
       class="item"
