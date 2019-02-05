@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from './service/game.service';
-import { GameFieldModel } from './model/game.enum';
+import { GameFieldModel, GameFieldEnum } from './model/game.enum';
 import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
@@ -11,7 +11,7 @@ import { TouchSequence } from 'selenium-webdriver';
 export class AppComponent implements OnInit {
   title = 'minesweeper';
 
-  gameMap: GameFieldModel[];
+  gameMap: any[];
 
   constructor(private gameService: GameService) {}
 
@@ -32,8 +32,14 @@ export class AppComponent implements OnInit {
   }
 
   clickField(item, rowIndex, columnIndex) {
-    console.log('click');
-    this.gameMap[rowIndex][columnIndex].isClicked = true;
+    console.log('left click');
+    if (item.value === GameFieldEnum.BOMB) {
+      this.gameMap.map(e =>
+        e.map(el => el.isClicked = (el.value === GameFieldEnum.BOMB || el.isClicked))
+      );
+    } else {
+      this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
+    }
   }
 
 

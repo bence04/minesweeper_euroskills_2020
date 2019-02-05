@@ -47,11 +47,27 @@ export class GameService {
     );
   }
 
+  showEmptyNeighbours(x, y, board) {
+    const element = board[x][y];
+    if (element == null || element.isClicked) { return; }
+    element.isClicked = true;
+
+    if (element.value === GameFieldEnum.EMPTY) {
+      for (let i = x - 1; i <= x + 1; i++) {
+        for (let j = y - 1; j <= y + 1; j++) {
+          if (i >= 0 && i < board.length && j >= 0 && j < board.length) {
+            this.showEmptyNeighbours(i, j, board);
+          }
+        }
+      }
+    }
+  }
+
   countBombs(row: number, col: number, board: GameFieldModel[]) {
     let cnt = 0;
     for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
-        if (i >= 0 && i < 9 && j >= 0 && j < 9) {
+        if (i >= 0 && i < board.length && j >= 0 && j < board.length) {
           if (board[i][j].value === GameFieldEnum.BOMB) {
             cnt++;
           }
