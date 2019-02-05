@@ -23,20 +23,26 @@ export class GameService {
     initGameMap.fill(this.emptyModel);
     initGameMap.fill(this.bombModel, 0, bombs);
     initGameMap = this.arrayToMatrix(this.shuffleArray(initGameMap), column);
-
-    return this.calculateFieldValue(initGameMap);
+    const ret = this.calculateFieldValue(initGameMap);
+    return ret;
   }
 
   calculateFieldValue(array: any[]) {
     return array.map((_, rowIndex: number) =>
       _.map((column: GameFieldModel, columnINdex: number) => {
         if (column.value !== GameFieldEnum.BOMB) {
-           return {
+          return {
             value: this.countBombs(rowIndex, columnINdex, array),
             isClicked: false,
             isSelected: false
           };
-        } else { return column; }
+        } else {
+          return {
+            value: GameFieldEnum.BOMB,
+            isClicked: false,
+            isSelected: false
+          };
+        }
       })
     );
   }

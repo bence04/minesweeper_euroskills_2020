@@ -1,9 +1,20 @@
 <button (click)="newGame()">New game</button>
 
-<div class="row" *ngFor="let row of gameMap">
-  <span class="column" *ngFor="let item of row">
-    <span class="item">
-      {{ item.value }}
+<div class="row" *ngFor="let row of gameMap; let rowIndex = index">
+  <span class="column" *ngFor="let item of row; let columnIndex = index">
+    <span class="item" *ngIf="item.isClicked"> {{ item.value }} </span>
+    <span
+      class="item"
+      *ngIf="!item.isClicked && !item.isSelected"
+      (contextmenu)="selectField(item, rowIndex, columnIndex)"
+      (click)="clickField(item, rowIndex, columnIndex)">
+      &nbsp;
+    </span>
+    <span
+      class="item"
+      *ngIf="item.isSelected"
+      (contextmenu)="selectField(item, rowIndex, columnIndex)">
+      <i class="fas fa-flag"></i>
     </span>
   </span>
 </div>

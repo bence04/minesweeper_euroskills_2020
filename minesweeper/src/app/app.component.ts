@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { GameService } from './service/game.service';
 import { GameFieldModel } from './model/game.enum';
+import { TouchSequence } from 'selenium-webdriver';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +22,19 @@ export class AppComponent implements OnInit {
 
   newGame() {
     this.gameMap = this.gameService.generateMap(9, 9, 10);
+    console.log(this.gameMap);
   }
 
+  selectField(item, rowIndex, columnIndex) {
+    console.log('right click');
+    this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
+    return false;
+  }
 
+  clickField(item, rowIndex, columnIndex) {
+    console.log('click');
+    this.gameMap[rowIndex][columnIndex].isClicked = true;
+  }
 
 
 
