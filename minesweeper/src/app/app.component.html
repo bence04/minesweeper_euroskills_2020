@@ -12,7 +12,7 @@
     </span>
     <span
       class="item"
-      *ngIf="item.isSelected"
+      *ngIf="item.isSelected && !endOfGame"
       (contextmenu)="selectField(item, rowIndex, columnIndex)">
       <i class="fas fa-flag"></i>
     </span>

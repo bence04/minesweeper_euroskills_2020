@@ -51,6 +51,7 @@ export class GameService {
     const element = board[row][col];
     if (element == null || element.isClicked) { return; }
     element.isClicked = true;
+    element.isSelected = false;
 
     if (element.value === GameFieldEnum.EMPTY) {
       for (let i = row - 1; i <= row + 1; i++) {
@@ -61,6 +62,12 @@ export class GameService {
         }
       }
     }
+  }
+
+  isLastClick(board: GameFieldModel[][]) {
+    return board.map(row =>
+      row.filter(x => x.isClicked === false && x.value !== GameFieldEnum.BOMB)
+    ).filter(x => x.length !== 0).length === 0;
   }
 
   countBombs(row: number, col: number, board: GameFieldModel[][]) {

@@ -50,12 +50,7 @@ export class AppComponent implements OnInit {
         this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
       }
 
-      // nyert
-      const leftItems = this.gameMap.map(row =>
-        row.filter(x => x.isClicked === false && x.value !== GameFieldEnum.BOMB)
-      ).filter(x => x.length !== 0).length;
-
-      if (leftItems === 0) {
+      if (this.gameService.isLastClick(this.gameMap)) {
         alert('Nyertél');
         this.endOfGame = true;
       }
