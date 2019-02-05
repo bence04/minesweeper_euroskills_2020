@@ -20,8 +20,7 @@ export class AppComponent implements OnInit {
   }
 
   newGame() {
-    this.gameService.generateMap(9, 9, 10);
-    this.gameMap = this.gameService.gameMap;
+    this.gameMap = this.gameService.generateMap(9, 9, 10);
   }
 
 

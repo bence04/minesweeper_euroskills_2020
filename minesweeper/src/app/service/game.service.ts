@@ -16,8 +16,6 @@ export class GameService {
     isSelected: false
   };
 
-  gameMap: GameFieldModel[];
-
   constructor() {}
 
   generateMap(row: number, column: number, bombs: number) {
@@ -26,7 +24,7 @@ export class GameService {
     initGameMap.fill(this.bombModel, 0, bombs);
     initGameMap = this.arrayToMatrix(this.shuffleArray(initGameMap), column);
 
-    this.gameMap = this.calculateFieldValue(initGameMap);
+    return this.calculateFieldValue(initGameMap);
   }
 
   calculateFieldValue(array: any[]) {
