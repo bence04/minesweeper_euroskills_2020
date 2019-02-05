@@ -23,8 +23,7 @@ export class GameService {
     initGameMap.fill(this.emptyModel);
     initGameMap.fill(this.bombModel, 0, bombs);
     initGameMap = this.arrayToMatrix(this.shuffleArray(initGameMap), column);
-    const ret = this.calculateFieldValue(initGameMap);
-    return ret;
+    return this.calculateFieldValue(initGameMap);
   }
 
   calculateFieldValue(array: GameFieldModel[][]) {
@@ -74,10 +73,8 @@ export class GameService {
     let cnt = 0;
     for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
-        if (i >= 0 && i < board.length && j >= 0 && j < board.length) {
-          if (board[i][j].value === GameFieldEnum.BOMB) {
-            cnt++;
-          }
+        if (i >= 0 && i < board.length && j >= 0 && j < board.length && board[i][j].value === GameFieldEnum.BOMB) {
+          cnt++;
         }
       }
     }

@@ -1,4 +1,5 @@
 <button (click)="newGame()">New game</button>
+{{ timeInSec }} {{ allBombs }}
 
 <div class="row" *ngFor="let row of gameMap; let rowIndex = index">
   <span class="column" *ngFor="let item of row; let columnIndex = index">
@@ -9,6 +10,7 @@
       (contextmenu)="selectField(item, rowIndex, columnIndex)"
       (click)="clickField(item, rowIndex, columnIndex)">
       &nbsp;
+
     </span>
     <span
       class="item"
