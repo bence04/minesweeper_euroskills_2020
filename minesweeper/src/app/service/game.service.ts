@@ -5,7 +5,6 @@ import { GameFieldEnum, GameFieldModel } from '../model/game.enum';
   providedIn: 'root'
 })
 export class GameService {
-
   emptyModel: GameFieldModel = {
     value: GameFieldEnum.EMPTY,
     isClicked: false,
@@ -17,16 +16,45 @@ export class GameService {
     isSelected: false
   };
 
+  gameMap: GameFieldModel[];
+
   constructor() {}
 
   generateMap(row: number, column: number, bombs: number) {
-    console.log('map gen');
-    let gameMap = new Array(row * column);
-    gameMap.fill(this.emptyModel);
-    gameMap.fill(this.bombModel, 0, bombs);
+    let initGameMap = new Array(row * column);
+    initGameMap.fill(this.emptyModel);
+    initGameMap.fill(this.bombModel, 0, bombs);
+    initGameMap = this.arrayToMatrix(this.shuffleArray(initGameMap), column);
 
-    gameMap = this.arrayToMatrix(this.shuffleArray(gameMap), column);
-    console.log(gameMap);
+    this.gameMap = this.calculateFieldValue(initGameMap);
+  }
+
+  calculateFieldValue(array: any[]) {
+    return array.map((_, rowIndex: number) =>
+      _.map((column: GameFieldModel, columnINdex: number) => {
+        if (column.value !== GameFieldEnum.BOMB) {
+           return {
+            value: this.countBombs(rowIndex, columnINdex, array),
+            isClicked: false,
+            isSelected: false
+          };
+        } else { return column; }
+      })
+    );
+  }
+
+  countBombs(row: number, col: number, board: GameFieldModel[]) {
+    let cnt = 0;
+    for (let i = row - 1; i <= row + 1; i++) {
+      for (let j = col - 1; j <= col + 1; j++) {
+        if (i >= 0 && i < 9 && j >= 0 && j < 9) {
+          if (board[i][j].value === GameFieldEnum.BOMB) {
+            cnt++;
+          }
+        }
+      }
+    }
+    return cnt;
   }
 
   shuffleArray(array: GameFieldEnum[]) {
