@@ -45,8 +45,19 @@ export class AppComponent implements OnInit {
           e.map(el => el.isClicked = (el.value === GameFieldEnum.BOMB || el.isClicked))
         );
         this.endOfGame = true;
+        alert('vesztettél');
       } else {
         this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
+      }
+
+      // nyert
+      const leftItems = this.gameMap.map(row =>
+        row.filter(x => x.isClicked === false && x.value !== GameFieldEnum.BOMB)
+      ).filter(x => x.length !== 0).length;
+
+      if (leftItems === 0) {
+        alert('Nyertél');
+        this.endOfGame = true;
       }
     } else {
       alert('kezdj új játékot');
