@@ -27,7 +27,7 @@ export class GameService {
     return ret;
   }
 
-  calculateFieldValue(array: any[]) {
+  calculateFieldValue(array: GameFieldModel[][]) {
     return array.map((_, rowIndex: number) =>
       _.map((column: GameFieldModel, columnINdex: number) => {
         if (column.value !== GameFieldEnum.BOMB) {
@@ -47,14 +47,14 @@ export class GameService {
     );
   }
 
-  showEmptyNeighbours(x, y, board) {
-    const element = board[x][y];
+  showEmptyNeighbours(row: number, col: number, board: GameFieldModel[][]) {
+    const element = board[row][col];
     if (element == null || element.isClicked) { return; }
     element.isClicked = true;
 
     if (element.value === GameFieldEnum.EMPTY) {
-      for (let i = x - 1; i <= x + 1; i++) {
-        for (let j = y - 1; j <= y + 1; j++) {
+      for (let i = row - 1; i <= row + 1; i++) {
+        for (let j = col - 1; j <= col + 1; j++) {
           if (i >= 0 && i < board.length && j >= 0 && j < board.length) {
             this.showEmptyNeighbours(i, j, board);
           }
@@ -63,7 +63,7 @@ export class GameService {
     }
   }
 
-  countBombs(row: number, col: number, board: GameFieldModel[]) {
+  countBombs(row: number, col: number, board: GameFieldModel[][]) {
     let cnt = 0;
     for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {

@@ -11,7 +11,7 @@ import { TouchSequence } from 'selenium-webdriver';
 export class AppComponent implements OnInit {
   title = 'minesweeper';
 
-  gameMap: any[];
+  gameMap: GameFieldModel[][];
 
   constructor(private gameService: GameService) {}
 
@@ -25,13 +25,13 @@ export class AppComponent implements OnInit {
     console.log(this.gameMap);
   }
 
-  selectField(item, rowIndex, columnIndex) {
+  selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     console.log('right click');
     this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
     return false;
   }
 
-  clickField(item, rowIndex, columnIndex) {
+  clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     console.log('left click');
     if (item.value === GameFieldEnum.BOMB) {
       this.gameMap.map(e =>
