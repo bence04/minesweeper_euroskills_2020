@@ -1,0 +1,12 @@
+.column {
+  display: inline-block;
+
+  .item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 50px;
+    border: 1px solid black;
+  }
+}

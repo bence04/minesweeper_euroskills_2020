@@ -1,0 +1,28 @@
+<button (click)="newGame()">New game</button>
+{{ timeInSec }} {{ allBombs }}
+
+<div class="row" *ngFor="let row of gameMap; let rowIndex = index">
+  <span class="column" *ngFor="let item of row; let columnIndex = index">
+    <span class="item" *ngIf="item.isClicked"> {{ item.value }} </span>
+    <span
+      class="item"
+      *ngIf="!item.isClicked && !item.isSelected"
+      (contextmenu)="selectField(item, rowIndex, columnIndex)"
+      (click)="clickField(item, rowIndex, columnIndex)">
+      &nbsp;
+      <span *ngIf="item.value === -1">B</span>
+    </span>
+    <span
+      class="item"
+      *ngIf="item.isSelected && !endOfGame"
+      (contextmenu)="selectField(item, rowIndex, columnIndex)">
+      <i class="fas fa-flag"></i>
+    </span>
+  </span>
+</div>
+
+<div class="high-score"> HS
+  <div class="user" *ngFor="let user of highScore">
+    {{ user.name }} :: {{ user.time }}
+  </div>
+</div>
