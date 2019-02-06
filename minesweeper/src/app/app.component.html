@@ -1,25 +1,2 @@
-<!-- <app-board></app-board> -->
-<div class="wrapper">
-  <div class="game-start">
-    <div class="header">
-      Minesweeper
-    </div>
-    <div class="content">
-      <div class="button">
-        <span class="field-size"><i class="fas fa-chess-board"></i> 9x9</span>
-        <span class="bomb-count">10 <i class="fas fa-bomb"></i></span>
-      </div>
-      <br />
-      <div class="button">
-        <span class="field-size"><i class="fas fa-chess-board"></i> 16x16</span>
-        <span class="bomb-count">40 <i class="fas fa-bomb"></i></span>
-      </div>
-    </div>
-    <div class="start">
-      Start game
-    </div>
-  </div>
-  <footer>
-    Tóth Bence (60) - 2019
-  </footer>
-</div>
+<app-login *ngIf="!loginData.isLogged" [(loginData)]="loginData"></app-login>
+<app-board *ngIf="loginData.isLogged" [(loginData)]="loginData"></app-board>

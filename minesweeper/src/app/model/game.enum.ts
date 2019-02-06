@@ -21,3 +21,9 @@ export interface HighScoreModel {
   name: string;
   time: number;
 }
+
+export interface LoginDataModel {
+  isLogged: boolean;
+  boardSize: number;
+  bombsCount: number;
+}

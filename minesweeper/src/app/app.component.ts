@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { LoginDataModel } from './model/game.enum';
 
 @Component({
   selector: 'app-root',
@@ -6,8 +7,13 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {}
+  loginData: LoginDataModel = {
+    isLogged: false,
+    boardSize: 0,
+    bombsCount: 0
+  };
 
+  constructor() {}
 
 
 }

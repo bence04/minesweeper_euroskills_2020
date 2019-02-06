@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { GameFieldModel, HighScoreModel, GameFieldEnum } from '../model/game.enum';
+import { Component, Input } from '@angular/core';
+import { GameFieldModel, HighScoreModel, GameFieldEnum, LoginDataModel } from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
 
@@ -9,6 +9,7 @@ import { GameService } from '../service/game.service';
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent {
+  @Input() loginData: LoginDataModel;
 
   gameMap: GameFieldModel[][];
   endOfGame = false;
@@ -20,9 +21,9 @@ export class BoardComponent {
   constructor(private gameService: GameService) {}
 
   newGame() {
-    this.getHighscore();
+    this.getHighscore(); // ezzel valamit kezdeni, innen eltüntetni
     if (this.timerSubscription !== undefined) { this.timerSubscription.unsubscribe(); }
-    this.gameMap = this.gameService.generateMap(9, 9, 10);
+    this.gameMap = this.gameService.generateMap(this.loginData.boardSize, this.loginData.boardSize, this.loginData.bombsCount);
     this.allBombs = 10;
     this.endOfGame = false;
     this.timerSubscription = timer(0, 1000).subscribe((val) => this.timeInSec = val);
