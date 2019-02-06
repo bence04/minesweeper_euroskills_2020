@@ -1,12 +1,32 @@
-.column {
-  display: inline-block;
+.wrapper {
+  background: grey;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 50px;
-    border: 1px solid black;
+  .game-start {
+    background: white;
+    border-radius: 10px;
+    height: 300px;
+    width: 250px;
+    margin: 0;
+    animation: scale-up-center 1.5s;
+    box-shadow: 10px 10px 26px -13px rgba(0,0,0,0.75);
+
+    .header {
+      padding: 8px;
+      font-weight: bold;
+    }
+  }
+
+  @keyframes scale-up-center {
+    0% {
+      transform: scale(0);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
 }
