@@ -1,3 +1,12 @@
+@keyframes scale-up-center {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 .wrapper {
   background: grey;
   width: 100%;
@@ -8,25 +17,65 @@
 
   .game-start {
     background: white;
-    border-radius: 10px;
-    height: 300px;
-    width: 250px;
+    border-radius: 15px;
+    width: 300px;
     margin: 0;
     animation: scale-up-center 1.5s;
-    box-shadow: 10px 10px 26px -13px rgba(0,0,0,0.75);
+    box-shadow: 10px 10px 26px -13px rgba(0, 0, 0, 0.75);
 
     .header {
-      padding: 8px;
+      padding: 18px;
+      text-align: center;
       font-weight: bold;
+      font-size: 20px;
+      border-bottom: 1px solid rgb(160, 160, 160);
+    }
+
+    .content {
+      padding: 9px;
+
+      .button {
+        cursor: pointer;
+        padding: 9px;
+
+        .field-size {
+          font-size: 30px;
+          color: lightblue;
+          font-weight: bold;
+
+          i {
+            margin-right: 8px;
+          }
+        }
+
+        .bomb-count {
+          color: grey;
+          float: right;
+          margin-top: 10px;
+        }
+      }
+
+      .button:hover {
+        background: rgb(220, 239, 248);
+      }
+    }
+
+    .start {
+      background: rgb(30, 163, 30);
+      height: 35px;
+      width: 100%;
+      border-bottom-left-radius: 15px;
+      border-bottom-right-radius: 15px;
+      color: white;
+      cursor: pointer;
+      text-align: center;
+      padding-top: 15px;
     }
   }
 
-  @keyframes scale-up-center {
-    0% {
-      transform: scale(0);
-    }
-    100% {
-      transform: scale(1);
-    }
+  footer {
+    position: absolute;
+    right: 18px;
+    bottom: 14px;
   }
 }
