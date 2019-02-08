@@ -1,12 +1,60 @@
-.column {
-  display: inline-block;
+@keyframes scale-down-center {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
-  .item {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 50px;
-    width: 50px;
-    border: 1px solid black;
+.wrapper {
+  background: grey;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+
+  .game-wrapper {
+    background: red;
+    width: 70%;
+
+    .infos {
+      margin-top: 26px;
+      background: yellow;
+    }
+
+    .board {
+      background: blue;
+      text-align: center;
+      .row {
+        .column {
+          display: inline-block;
+          background: pink;
+          animation: scale-down-center .3s;
+          animation-fill-mode: both;
+
+          .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 50px;
+            width: 50px;
+            border: 1px solid black;
+          }
+        }
+
+
+        @for $i from 1 through 17*17 {
+          .column-index-#{$i} {
+              animation-delay: #{$i / 60}s;
+              animation-fill-mode: both;
+          }
+        }
+
+      }
+    }
+  }
+  .high-score {
+    width: 30%;
+    background: green;
   }
 }

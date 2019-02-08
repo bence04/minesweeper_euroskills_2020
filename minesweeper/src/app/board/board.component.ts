@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { GameFieldModel, HighScoreModel, GameFieldEnum, LoginDataModel } from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
@@ -8,7 +8,7 @@ import { GameService } from '../service/game.service';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent {
+export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
 
   gameMap: GameFieldModel[][];
@@ -20,13 +20,22 @@ export class BoardComponent {
 
   constructor(private gameService: GameService) {}
 
+  ngOnInit() {
+    this.getHighscore();
+    this.initMap();
+  }
+
   newGame() {
-    this.getHighscore(); // ezzel valamit kezdeni, innen eltüntetni
-    if (this.timerSubscription !== undefined) { this.timerSubscription.unsubscribe(); }
+    this.getHighscore();
+    this.initMap();
+  }
+  initMap() {
+    if (this.timerSubscription !== undefined) {
+      this.resetTimer();
+    }
     this.gameMap = this.gameService.generateMap(this.loginData.boardSize, this.loginData.boardSize, this.loginData.bombsCount);
     this.allBombs = 10;
     this.endOfGame = false;
-    this.timerSubscription = timer(0, 1000).subscribe((val) => this.timeInSec = val);
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
@@ -41,6 +50,7 @@ export class BoardComponent {
 
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
+      if (this.timerSubscription === undefined) { this.timerSubscription = timer(0, 1000).subscribe((val) => this.timeInSec = val); }
       if (item.value === GameFieldEnum.BOMB) {
         this.gameFinnish();
         alert('vesztettél');
@@ -65,7 +75,7 @@ export class BoardComponent {
     this.gameMap.map(e =>
       e.map(el => el.isClicked = (el.value === GameFieldEnum.BOMB || el.isClicked))
     );
-    this.timerSubscription.unsubscribe();
+    this.resetTimer();
     this.endOfGame = true;
   }
 
@@ -74,6 +84,12 @@ export class BoardComponent {
     if (getScoreStr !== null) {
       this.highScore = JSON.parse(getScoreStr);
     }
+  }
+
+  resetTimer() {
+    this.timerSubscription.unsubscribe();
+    this.timerSubscription = undefined;
+    this.timeInSec = 0;
   }
 
 
