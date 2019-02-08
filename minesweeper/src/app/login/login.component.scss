@@ -1,14 +1,8 @@
-@keyframes scale-up-center {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
+@import '../../assets/scss/keyframes';
+@import '../../assets/scss/colors';
 
 .wrapper {
-  background: radial-gradient(ellipse at bottom, #2c3f55 0%, #090a0f 100%);
+  background: $gradient-background;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -16,7 +10,7 @@
   justify-content: center;
 
   .game-start {
-    background: #E8DFBA;
+    background: $main-background;
     border-radius: 15px;
     width: 300px;
     margin: 0;
@@ -41,7 +35,7 @@
 
         .field-size {
           font-size: 30px;
-          color: #2A374C;
+          color: $dark-blue;
           font-weight: bold;
 
           i {
@@ -56,17 +50,17 @@
         }
 
         &.selected {
-          background: rgb(252, 236, 210);
+          background: $login-select;
         }
       }
 
       .button:hover {
-        background: rgb(252, 236, 210);
+        background: $login-select;
       }
     }
 
     .start {
-      background: #5A687D;
+      background: $dark-blue;
       height: 35px;
       width: 100%;
       border-bottom-left-radius: 15px;
@@ -75,6 +69,10 @@
       cursor: pointer;
       text-align: center;
       padding-top: 15px;
+    }
+
+    .start:hover {
+      background: $dark-blue-hover;
     }
   }
 

@@ -1,21 +1,5 @@
-@keyframes opacity-show {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes blink {
-  0% {
-    opacity: 1;
-  }
-
-  100% {
-    opacity: 0.3;
-  }
-}
+@import '../../assets/scss/keyframes';
+@import '../../assets/scss/colors';
 
 @for $i from 0 through 1000 {
   .stars:nth-child(#{$i}) {
@@ -40,7 +24,7 @@
   margin: 0 auto;
   margin-top: 0px;
   position: relative;
-  background: radial-gradient(ellipse at bottom, #2c3f55 0%, #090a0f 100%);
+  background: $gradient-background;
 
   .wrapper {
     height: 100%;
@@ -92,15 +76,15 @@
           padding: 10px;
           font-size: 18px;
           color: white;
-          background: #415067;
+          background: $dark-blue;
           margin-top: 20px;
-          border: 1px solif #415067;
+          border: 1px solif $dark-blue;
           border-radius: 5px;
           cursor: pointer;
         }
 
         .new-game:hover {
-          background: #556885;
+          background: $dark-blue-hover;
         }
       }
 
@@ -109,7 +93,7 @@
         .row {
           .column {
             display: inline-block;
-            background: #415067;
+            background: $dark-blue;
             animation: opacity-show 0.3s;
             animation-fill-mode: both;
             margin: 2px;
@@ -128,14 +112,14 @@
               }
 
               &.opened {
-                background: #E8DFBA;
+                background: $main-background;
                 color: black;
                 animation: opacity-show 0.5s;
                 cursor: default;
               }
 
               &.closed {
-                background: #415067;
+                background: $dark-blue;
                 color: white;
               }
             }
@@ -162,7 +146,7 @@
         z-index: 250;
         width: 300px;
         word-wrap: break-word;
-        background: rgb(232, 223, 186);
+        background: $main-background;
         border-radius: 15px;
         padding-bottom: 15px;
 
@@ -205,7 +189,7 @@
 .modal {
   $width: 300;
   $height: 200;
-  background: #E8DFBA;
+  background: $main-background;
   border-radius: 10px;
   width: $width + px;
   height: $height + px;
@@ -233,7 +217,7 @@
     input {
       background: transparent;
       width: calc(100% - 20px);
-      border: 1px solid #5A687D;
+      border: 1px solid $dark-blue;
       padding: 8px;
       font-size: 16px;
       border-radius: 5px;
@@ -243,7 +227,7 @@
   }
   .save-btn {
     width: calc(100% - 16px);
-    background: #5A687D;
+    background: $dark-blue;
     position: absolute;
     bottom: 0;
     left: 0;
@@ -252,6 +236,7 @@
     color: white;
     padding: 8px;
     text-align: center;
+    cursor: pointer;
   }
 }
 
