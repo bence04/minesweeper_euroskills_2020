@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { LoginDataModel } from '../model/game.enum';
 
 @Component({
@@ -6,16 +6,12 @@ import { LoginDataModel } from '../model/game.enum';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   @Input() loginData: LoginDataModel;
   @Output() loginDataChange = new EventEmitter<LoginDataModel>();
   selected = 0;
 
   constructor() {}
-
-  ngOnInit() {
-    console.log(this.loginData);
-  }
 
   startGame() {
     if (this.selected === 1) {
@@ -24,7 +20,7 @@ export class LoginComponent implements OnInit {
         boardSize: 9,
         bombsCount: 10
       });
-    } else { // error ha nincs kiválasztva, ide else if
+    } else {
       this.loginDataChange.emit({
         isLogged: true,
         boardSize: 16,
