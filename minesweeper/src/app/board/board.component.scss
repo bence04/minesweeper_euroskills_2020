@@ -6,147 +6,113 @@
     opacity: 1;
   }
 }
-@keyframes animStar {
-  from	{
-    transform: translateY(0px)
+
+@keyframes blink {
+  0% {
+    opacity: 1;
   }
-  to {
-    transform: translateY(-2000px)
+
+  100% {
+    opacity: 0.3;
   }
 }
 
-@function multiple-box-shadow($n) {
-  $value: "#{random(2000)}px #{random(2000)}px #FFF";
-  @for $i from 2 through $n {
-    $value: "#{$value} , #{random(2000)}px #{random(2000)}px #FFF";
+@for $i from 0 through 1000 {
+  .stars:nth-child(#{$i}) {
+    $size: random(3);
+    width: $size + px;
+    height: $size + px;
+    margin-left: random(2000) + px;
+    margin-top: random(2000) + px;
+    border-radius: 50%;
+    background: white;
+    position: absolute;
+    z-index: 1;
+    opacity: 1;
+    animation: blink 2s linear infinite;
+    animation-delay: $i * 0.2s;
   }
-  @return unquote($value);
 }
-
-$shadows-small: multiple-box-shadow(700);
-$shadows-medium: multiple-box-shadow(300);
-$shadows-big: multiple-box-shadow(150);
-
-.wrapper {
-  height: 100%;
-  background: radial-gradient(ellipse at bottom, #2c3f55 0%, #090a0f 100%);
-  overflow: hidden;
+.background {
   width: 100%;
   height: 100vh;
-  display: flex;
+  overflow: hidden;
+  margin: 0 auto;
+  margin-top: 0px;
+  position: relative;
+  background: radial-gradient(ellipse at bottom, #2c3f55 0%, #090a0f 100%);
 
-  .game-wrapper {
-    /* background: red; */
-    width: 70%;
+  .wrapper {
+    height: 100%;
+    overflow: hidden;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    position: relative;
+    top: 0;
+    left: 0;
 
-    .infos {
-      margin-top: 26px;
-      /* background: yellow; */
-    }
+    .game-wrapper {
+      /* background: red; */
+      width: 70%;
+      z-index: 10;
 
-    .board {
-      /* background: blue; */
-      text-align: center;
-      .row {
-        .column {
-          display: inline-block;
-          background: #415067;
-          animation: opacity-show 0.3s;
-          animation-fill-mode: both;
-          margin: 2px;
+      .infos {
+        margin-top: 26px;
+        /* background: yellow; */
+      }
 
-          .item {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 25px;
-            width: 25px;
+      .board {
+        /* background: blue; */
+        text-align: center;
+        .row {
+          .column {
+            display: inline-block;
+            background: #415067;
+            animation: opacity-show 0.3s;
+            animation-fill-mode: both;
+            margin: 2px;
+            cursor: pointer;
 
-            &.opened {
-              background: rgb(236, 236, 236);
-              color: black;
-              animation: opacity-show 0.5s;
-            }
+            .item {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 25px;
+              width: 25px;
 
-            &.closed {
-              background: #415067;
-              color: white;
+              &.opened {
+                background: rgb(236, 236, 236);
+                color: black;
+                animation: opacity-show 0.5s;
+                cursor: default;
+              }
+
+              &.closed {
+                background: #415067;
+                color: white;
+              }
             }
           }
-        }
 
-        @for $i from 1 through 17 * 17 {
-          .column-index-#{$i} {
-            animation-delay: #{$i / 60}s;
-            animation-fill-mode: both;
+          @for $i from 1 through 17 * 17 {
+            .column-index-#{$i} {
+              animation-delay: #{$i / 60}s;
+              animation-fill-mode: both;
+            }
           }
         }
       }
     }
-  }
-  .high-score {
-    width: 30%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    .high-score {
+      width: 30%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
-    .high-score-table {
-      background: white;
-    }
-  }
-
-  #stars {
-    width: 1px;
-    height: 1px;
-    background: transparent;
-    box-shadow: $shadows-small;
-    animation: animStar 50s linear infinite;
-
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 1px;
-      height: 1px;
-      background: transparent;
-      box-shadow: $shadows-small;
-    }
-  }
-
-  #stars2 {
-    width: 2px;
-    height: 2px;
-    background: transparent;
-    box-shadow: $shadows-medium;
-    animation: animStar 100s linear infinite;
-
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 2px;
-      height: 2px;
-      background: transparent;
-      box-shadow: $shadows-medium;
-    }
-  }
-
-  #stars3 {
-    width: 3px;
-    height: 3px;
-    background: transparent;
-    box-shadow: $shadows-big;
-    animation: animStar 150s linear infinite;
-
-    &:after {
-      content: " ";
-      position: absolute;
-      top: 2000px;
-      width: 3px;
-      height: 3px;
-      background: transparent;
-      box-shadow: $shadows-big;
+      .high-score-table {
+        background: white;
+      }
     }
   }
 }
-

@@ -1,39 +1,54 @@
-<div class="wrapper">
+<div class="background">
+  <div class="stars" *ngFor="let item of [].constructor(1000)"></div>
 
-  <div id="stars"></div>
-  <div id="stars2"></div>
-  <div id="stars3"></div>
-  <div class="game-wrapper">
-
+  <div class="wrapper">
+    <div class="game-wrapper">
       <div class="infos">
-          <button (click)="newGame()">New game</button>
-          <span style="color: white; font-size: 22px;">{{ timeInSec }} {{ allBombs }}</span>
+        <button (click)="newGame()">New game</button>
+        <span style="color: white; font-size: 22px;"
+          >{{ timeInSec }} {{ allBombs }}</span
+        >
       </div>
       <div class="board">
         <div class="row" *ngFor="let row of gameMap; let rowIndex = index">
-          <span class="column column-index-{{ (rowIndex + 1) * (row.length + 1) + columnIndex}}" *ngFor="let item of row; let columnIndex = index">
+          <span
+            class="column column-index-{{
+              (rowIndex + 1) * (row.length + 1) + columnIndex
+            }}"
+            *ngFor="let item of row; let columnIndex = index"
+          >
             <span class="item opened" *ngIf="item.isClicked">
               <span *ngIf="item.value !== 0">{{ item.value }}</span>
               <span *ngIf="item.value === 0">&nbsp;</span>
             </span>
-            <span class="item closed" *ngIf="!item.isClicked && !item.isSelected" (contextmenu)="selectField(item, rowIndex, columnIndex)" (click)="clickField(item, rowIndex, columnIndex)">
+            <span
+              class="item closed"
+              *ngIf="!item.isClicked && !item.isSelected"
+              (contextmenu)="selectField(item, rowIndex, columnIndex)"
+              (click)="clickField(item, rowIndex, columnIndex)"
+            >
               &nbsp;
               <span *ngIf="item.value === -1">B</span>
             </span>
-            <span class="item opened" *ngIf="item.isSelected && !endOfGame" (contextmenu)="selectField(item, rowIndex, columnIndex)">
+            <span
+              class="item opened"
+              *ngIf="item.isSelected && !endOfGame"
+              (contextmenu)="selectField(item, rowIndex, columnIndex)"
+            >
               <i class="fas fa-flag"></i>
             </span>
           </span>
         </div>
       </div>
-  </div>
+    </div>
 
-  <div class="high-score">
-    <div class="high-score-table">
-      <div class="header">Top 5 players</div>
+    <div class="high-score">
+      <div class="high-score-table">
+        <div class="header">Top 5 players</div>
         <div class="user" *ngFor="let user of highScore; let i = index">
-            {{ (i + 1) }}. {{ user.name }} :: {{ user.time }}
-          </div>
+          {{ i + 1 }}. {{ user.name }} :: {{ user.time }}
+        </div>
+      </div>
     </div>
   </div>
 </div>
