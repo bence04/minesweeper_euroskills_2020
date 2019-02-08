@@ -3,46 +3,34 @@
 
   <div class="wrapper">
     <div class="game-wrapper">
-      <div class="info-top" [ngStyle]="{'width': boardWidth + 'px'}">
-        <span class="timer"><i class="fas fa-stopwatch"></i> {{ timeDate }}</span>
-        <span class="bomb-count"><i class="fas fa-bomb"></i> {{ allBombs }}</span>
+      <div class="info-top" [ngStyle]="{ width: boardWidth + 'px' }">
+        <span class="timer">
+          <i class="fas fa-stopwatch"></i> {{ timeDate }}
+        </span>
+        <span class="bomb-count">
+          <i class="fas fa-bomb"></i> {{ allBombs }}
+        </span>
       </div>
       <div class="board">
         <div class="row" *ngFor="let row of gameMap; let rowIndex = index">
-          <span
-            class="column column-index-{{
-              (rowIndex + 1) * (row.length + 1) + columnIndex
-            }}"
-            *ngFor="let item of row; let columnIndex = index"
-          >
-            <span class="item opened" [ngClass]="{'bigger': row.length === 9}" *ngIf="item.isClicked">
+          <span class="column column-index-{{(rowIndex + 1) * (row.length + 1) + columnIndex }}" *ngFor="let item of row; let columnIndex = index">
+            <span class="item opened" [ngClass]="{ bigger: row.length === 9 }" *ngIf="item.isClicked">
               <span *ngIf="item.value > 0">{{ item.value }}</span>
               <span *ngIf="item.value === 0">&nbsp;</span>
               <span *ngIf="item.value === -1"><i class="fas fa-bomb"></i></span>
             </span>
-            <span
-              class="item closed"
-              *ngIf="!item.isClicked && !item.isSelected"
-              (contextmenu)="selectField(item, rowIndex, columnIndex)"
-              (click)="clickField(item, rowIndex, columnIndex)"
-              [ngClass]="{'bigger': row.length === 9}"
-            >
+            <span class="item closed" *ngIf="!item.isClicked && !item.isSelected" (contextmenu)="selectField(item, rowIndex, columnIndex)" (click)="clickField(item, rowIndex, columnIndex)" [ngClass]="{ bigger: row.length === 9 }">
               &nbsp;
               <span *ngIf="item.value === -1">B</span>
             </span>
-            <span
-              class="item opened"
-              *ngIf="item.isSelected && !endOfGame"
-              (contextmenu)="selectField(item, rowIndex, columnIndex)"
-              [ngClass]="{'bigger': row.length === 9}"
-            >
+            <span class="item opened" *ngIf="item.isSelected && !endOfGame" (contextmenu)="selectField(item, rowIndex, columnIndex)" [ngClass]="{ bigger: row.length === 9 }">
               <i class="fas fa-flag"></i>
             </span>
           </span>
         </div>
       </div>
       <div class="info-bottom">
-          <div (click)="newGame()" class="new-game">New game</div>
+        <div (click)="newGame()" class="new-game">New game</div>
       </div>
     </div>
 
@@ -51,23 +39,41 @@
         <div class="header">Top players</div>
         <div class="users">
           <div *ngIf="highScore.length === 0">No saved results yet</div>
-            <div class="user" *ngFor="let user of highScore; let i = index">
-                <span class="rank">{{ i + 1 }}.</span>
-                <span class="name">{{ user.name }}</span>
-                <span class="time">{{ user.time }}s</span>
-              </div>
+          <div class="user" *ngFor="let user of highScore; let i = index">
+            <span class="rank">{{ i + 1 }}.</span>
+            <span class="name">{{ user.name }}</span>
+            <span class="time">{{ user.time }}s</span>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<div class="highscore-modal-overlay" *ngIf="showNewRecordModal"></div>
-<div class="highscore-modal" *ngIf="showNewRecordModal">
+<div class="overlay" *ngIf="showOverlay"></div>
+<div class="modal" *ngIf="showNewRecordModal">
   <div class="header">New Record! 😲</div>
   <div class="info">Please type your name and save your score!</div>
   <div class="content">
-      <input type="text" placeholder="Your name" [(ngModel)]="userName">
+    <input type="text" placeholder="Your name" [(ngModel)]="userName" />
   </div>
   <div class="save-btn" (click)="saveNewRecord()">Save</div>
+</div>
+
+<div class="modal" *ngIf="showWinnerdModal">
+  <div class="header">You win! 😲</div>
+  <div class="info">You found the all bombs!</div>
+  <div class="save-btn" (click)="newGame()">New Game</div>
+</div>
+
+<div class="modal" *ngIf="showLostModal">
+  <div class="header">You lost! 😞</div>
+  <div class="info">You clicked to the bomb!</div>
+  <div class="save-btn" (click)="newGame()">New Game</div>
+</div>
+
+<div class="modal" *ngIf="showEndOfGameModal">
+  <div class="header">End of the game! 😞</div>
+  <div class="info">Please start a new game!</div>
+  <div class="save-btn" (click)="newGame()">New Game</div>
 </div>

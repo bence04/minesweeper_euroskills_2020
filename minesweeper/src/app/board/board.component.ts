@@ -19,7 +19,11 @@ export class BoardComponent implements OnInit {
   gameMap: GameFieldModel[][];
   endOfGame = false;
   userName: string;
+  showWinnerdModal = false;
   showNewRecordModal = false;
+  showEndOfGameModal = false;
+  showLostModal = false;
+  showOverlay = false;
   timeDate = '00:00';
   timeInSec = 0;
   allBombs = 0;
@@ -39,6 +43,10 @@ export class BoardComponent implements OnInit {
     this.initMap();
   }
   initMap() {
+    this.showEndOfGameModal = false;
+    this.showWinnerdModal = false;
+    this.showLostModal = false;
+    this.showOverlay = false;
     if (this.timerSubscription !== undefined) {
       this.resetTimer();
     }
@@ -62,13 +70,13 @@ export class BoardComponent implements OnInit {
       }
       this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
     } else {
-      alert('kezdj új játékot');
+      this.showEndOfGameModal = true;
+      this.showOverlay = true;
     }
     return false;
   }
 
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
-    console.log(this.endOfGame);
     if (!this.endOfGame) {
       if (this.timerSubscription === undefined) {
         this.timerSubscription = timer(0, 1000).subscribe(
@@ -81,7 +89,8 @@ export class BoardComponent implements OnInit {
       }
       if (item.value === GameFieldEnum.BOMB) {
         this.gameFinnish();
-        alert('vesztettél');
+        this.showLostModal = true;
+        this.showOverlay = true;
       } else {
         this.gameService.showEmptyNeighbours(
           rowIndex,
@@ -93,14 +102,19 @@ export class BoardComponent implements OnInit {
         this.timerSubscription.unsubscribe();
         if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
           this.showNewRecordModal = true;
+          this.showOverlay = true;
         } else if (this.highScore.length === 0) {
           this.showNewRecordModal = true;
+          this.showOverlay = true;
         } else {
+          this.showWinnerdModal = true;
+          this.showOverlay = true;
           this.gameFinnish();
         }
       }
     } else {
-      alert('kezdj új játékot');
+      this.showEndOfGameModal = true;
+      this.showOverlay = true;
     }
   }
 
@@ -138,6 +152,7 @@ export class BoardComponent implements OnInit {
       .slice(0, 5);
     localStorage.setItem('highscores', JSON.stringify(this.highScore));
     this.showNewRecordModal = false;
+    this.showOverlay = false;
     this.gameFinnish();
   }
 }
