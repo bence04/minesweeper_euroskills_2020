@@ -1,4 +1,4 @@
-@keyframes scale-down-center {
+@keyframes opacity-show {
   0% {
     opacity: 0;
   }
@@ -50,17 +50,28 @@ $shadows-big: multiple-box-shadow(150);
       .row {
         .column {
           display: inline-block;
-          background: pink;
-          animation: scale-down-center 0.3s;
+          background: #415067;
+          animation: opacity-show 0.3s;
           animation-fill-mode: both;
+          margin: 2px;
 
           .item {
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 50px;
-            width: 50px;
-            border: 1px solid black;
+            height: 25px;
+            width: 25px;
+
+            &.opened {
+              background: rgb(236, 236, 236);
+              color: black;
+              animation: opacity-show 0.5s;
+            }
+
+            &.closed {
+              background: #415067;
+              color: white;
+            }
           }
         }
 
@@ -75,7 +86,9 @@ $shadows-big: multiple-box-shadow(150);
   }
   .high-score {
     width: 30%;
-    /* background: green; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     .high-score-table {
       background: white;
