@@ -58,12 +58,12 @@ export class BoardComponent implements OnInit {
         this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
       }
       if (this.gameService.isLastClick(this.gameMap)) {
-        this.gameFinnish();
         this.highScore.push({name: 'asd', time: this.timeInSec});
         const sortedHighScore = this.highScore.sort(function(e1, e2) {
           return e1.time - e2.time;
         }).slice(0, 5);
         localStorage.setItem('highscores', JSON.stringify(sortedHighScore));
+        this.gameFinnish();
         alert('Nyertél');
       }
     } else {
