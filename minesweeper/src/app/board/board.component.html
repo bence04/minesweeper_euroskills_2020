@@ -4,7 +4,8 @@
   <div class="wrapper">
     <div class="game-wrapper">
       <div class="infos">
-        <button (click)="newGame()">New game</button>
+          <button (click)="newGame()">New game</button>
+          <button (click)="showModal()">show modal</button>
         <span style="color: white; font-size: 22px;"
           >{{ timeInSec }} {{ allBombs }}</span
         >
@@ -17,15 +18,17 @@
             }}"
             *ngFor="let item of row; let columnIndex = index"
           >
-            <span class="item opened" *ngIf="item.isClicked">
-              <span *ngIf="item.value !== 0">{{ item.value }}</span>
+            <span class="item opened" [ngClass]="{'bigger': row.length === 9}" *ngIf="item.isClicked">
+              <span *ngIf="item.value > 0">{{ item.value }}</span>
               <span *ngIf="item.value === 0">&nbsp;</span>
+              <span *ngIf="item.value === -1"><i class="fas fa-bomb"></i></span>
             </span>
             <span
               class="item closed"
               *ngIf="!item.isClicked && !item.isSelected"
               (contextmenu)="selectField(item, rowIndex, columnIndex)"
               (click)="clickField(item, rowIndex, columnIndex)"
+              [ngClass]="{'bigger': row.length === 9}"
             >
               &nbsp;
               <span *ngIf="item.value === -1">B</span>
@@ -34,6 +37,7 @@
               class="item opened"
               *ngIf="item.isSelected && !endOfGame"
               (contextmenu)="selectField(item, rowIndex, columnIndex)"
+              [ngClass]="{'bigger': row.length === 9}"
             >
               <i class="fas fa-flag"></i>
             </span>
@@ -51,4 +55,14 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="highscore-modal-overlay" *ngIf="showNewRecordModal"></div>
+<div class="highscore-modal" *ngIf="showNewRecordModal">
+  <div class="header">New Record! 😲</div>
+  <div class="info">Please type your name and save your score!</div>
+  <div class="content">
+      <input type="text" placeholder="Your name" [(ngModel)]="userName">
+  </div>
+  <div class="save-btn" (click)="saveNewRecord()">Save</div>
 </div>

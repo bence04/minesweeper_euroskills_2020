@@ -1,5 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { GameFieldModel, HighScoreModel, GameFieldEnum, LoginDataModel } from '../model/game.enum';
+import {
+  GameFieldModel,
+  HighScoreModel,
+  GameFieldEnum,
+  LoginDataModel
+} from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
 
@@ -13,6 +18,8 @@ export class BoardComponent implements OnInit {
 
   gameMap: GameFieldModel[][];
   endOfGame = false;
+  userName: string;
+  showNewRecordModal = false;
   timeInSec = 0;
   allBombs = 0;
   timerSubscription: Subscription;
@@ -33,14 +40,22 @@ export class BoardComponent implements OnInit {
     if (this.timerSubscription !== undefined) {
       this.resetTimer();
     }
-    this.gameMap = this.gameService.generateMap(this.loginData.boardSize, this.loginData.boardSize, this.loginData.bombsCount);
+    this.gameMap = this.gameService.generateMap(
+      this.loginData.boardSize,
+      this.loginData.boardSize,
+      this.loginData.bombsCount
+    );
     this.allBombs = 10;
     this.endOfGame = false;
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
-      if (item.isSelected) { this.allBombs++; } else { this.allBombs--; }
+      if (item.isSelected) {
+        this.allBombs++;
+      } else {
+        this.allBombs--;
+      }
       this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
     } else {
       alert('kezdj új játékot');
@@ -50,21 +65,29 @@ export class BoardComponent implements OnInit {
 
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
-      if (this.timerSubscription === undefined) { this.timerSubscription = timer(0, 1000).subscribe((val) => this.timeInSec = val); }
+      if (this.timerSubscription === undefined) {
+        this.timerSubscription = timer(0, 1000).subscribe(
+          val => (this.timeInSec = val)
+        );
+      }
       if (item.value === GameFieldEnum.BOMB) {
         this.gameFinnish();
         alert('vesztettél');
       } else {
-        this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
+        this.gameService.showEmptyNeighbours(
+          rowIndex,
+          columnIndex,
+          this.gameMap
+        );
       }
       if (this.gameService.isLastClick(this.gameMap)) {
-        this.highScore.push({name: 'asd', time: this.timeInSec});
-        const sortedHighScore = this.highScore.sort(function(e1, e2) {
-          return e1.time - e2.time;
-        }).slice(0, 5);
-        localStorage.setItem('highscores', JSON.stringify(sortedHighScore));
-        this.gameFinnish();
-        alert('Nyertél');
+        if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
+          this.showNewRecordModal = true;
+        } else if (this.highScore.length === 0) {
+          this.showNewRecordModal = true;
+        } else {
+          this.gameFinnish();
+        }
       }
     } else {
       alert('kezdj új játékot');
@@ -73,7 +96,9 @@ export class BoardComponent implements OnInit {
 
   gameFinnish() {
     this.gameMap.map(e =>
-      e.map(el => el.isClicked = (el.value === GameFieldEnum.BOMB || el.isClicked))
+      e.map(
+        el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
+      )
     );
     this.resetTimer();
     this.endOfGame = true;
@@ -92,5 +117,19 @@ export class BoardComponent implements OnInit {
     this.timeInSec = 0;
   }
 
+  saveNewRecord() {
+    this.highScore.push({ name: this.userName, time: this.timeInSec });
+    this.highScore = this.highScore
+      .sort(function(e1, e2) {
+        return e1.time - e2.time;
+      })
+      .slice(0, 5);
+    localStorage.setItem('highscores', JSON.stringify(this.highScore));
+    this.showNewRecordModal = false;
+    this.gameFinnish();
+  }
 
+  showModal() {
+    this.showNewRecordModal = true;
+  }
 }
