@@ -20,10 +20,12 @@ export class BoardComponent implements OnInit {
   endOfGame = false;
   userName: string;
   showNewRecordModal = false;
+  timeDate = '00:00';
   timeInSec = 0;
   allBombs = 0;
   timerSubscription: Subscription;
   highScore: HighScoreModel[] = [];
+  boardWidth = 0;
 
   constructor(private gameService: GameService) {}
 
@@ -47,6 +49,8 @@ export class BoardComponent implements OnInit {
     );
     this.allBombs = 10;
     this.endOfGame = false;
+    this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
+    console.log(this.boardWidth);
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
@@ -64,10 +68,15 @@ export class BoardComponent implements OnInit {
   }
 
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
+    console.log(this.endOfGame);
     if (!this.endOfGame) {
       if (this.timerSubscription === undefined) {
         this.timerSubscription = timer(0, 1000).subscribe(
-          val => (this.timeInSec = val)
+          val => {
+            this.timeInSec = val;
+            const minutes: number = Math.floor(this.timeInSec / 60);
+            this.timeDate = minutes.toString().padStart(2, '0') + ':' + (this.timeInSec - minutes * 60).toString().padStart(2, '0');
+          }
         );
       }
       if (item.value === GameFieldEnum.BOMB) {
@@ -81,6 +90,7 @@ export class BoardComponent implements OnInit {
         );
       }
       if (this.gameService.isLastClick(this.gameMap)) {
+        this.timerSubscription.unsubscribe();
         if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
           this.showNewRecordModal = true;
         } else if (this.highScore.length === 0) {
@@ -100,6 +110,7 @@ export class BoardComponent implements OnInit {
         el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
       )
     );
+    this.allBombs = this.loginData.bombsCount;
     this.resetTimer();
     this.endOfGame = true;
   }
@@ -115,6 +126,7 @@ export class BoardComponent implements OnInit {
     this.timerSubscription.unsubscribe();
     this.timerSubscription = undefined;
     this.timeInSec = 0;
+    this.timeDate = '00:00';
   }
 
   saveNewRecord() {
@@ -127,9 +139,5 @@ export class BoardComponent implements OnInit {
     localStorage.setItem('highscores', JSON.stringify(this.highScore));
     this.showNewRecordModal = false;
     this.gameFinnish();
-  }
-
-  showModal() {
-    this.showNewRecordModal = true;
   }
 }

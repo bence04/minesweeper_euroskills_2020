@@ -53,17 +53,58 @@
     left: 0;
 
     .game-wrapper {
-      /* background: red; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
       width: 70%;
       z-index: 10;
 
-      .infos {
+      .info-top {
         margin-top: 26px;
-        /* background: yellow; */
+        color: white;
+        margin-bottom: 10px;
+        font-size: 20px;
+        animation: opacity-show 0.3s;
+
+        .timer {
+          float: left;
+
+          .fas {
+            margin-right: 8px;;
+          }
+        }
+
+        .bomb-count {
+          float: right;
+
+          .fas {
+            margin-left: 8px;;
+          }
+        }
+      }
+
+      .info-bottom {
+        animation: opacity-show 0.3s;
+        .new-game {
+          width: 200px;
+          text-align: center;
+          padding: 10px;
+          font-size: 18px;
+          color: white;
+          background: #415067;
+          margin-top: 20px;
+          border: 1px solif #415067;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+
+        .new-game:hover {
+          background: #556885;
+        }
       }
 
       .board {
-        /* background: blue; */
         text-align: center;
         .row {
           .column {
@@ -100,6 +141,7 @@
             }
           }
 
+
           @for $i from 1 through 17 * 17 {
             .column-index-#{$i} {
               animation-delay: #{$i / 60}s;
@@ -114,11 +156,47 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      animation: opacity-show 0.3s;
 
       .high-score-table {
-        background: #E8DFBA;
-        padding: 40px 30px;
-        border-radius: 25px;
+        z-index: 250;
+        width: 300px;
+        word-wrap: break-word;
+        background: rgb(232, 223, 186);
+        border-radius: 15px;
+        padding-bottom: 15px;
+
+        .header {
+          padding: 15px 30px;
+          border-bottom: 1px solid rgb(160, 160, 160);
+          text-align: center;
+          font-weight: bold;
+          font-size: 20px;
+        }
+
+        .users {
+          padding: 8px 30px;
+
+          .user {
+            margin-bottom: 8px;
+            margin-top: 8px;
+
+            .rank {
+              width: 30px;
+              display: inline-block;
+            }
+
+            .name {
+              width: 160px;
+              display: inline-block;
+            }
+
+            .time {
+              width: 40px;
+              display: inline-block;
+            }
+          }
+        }
       }
     }
   }

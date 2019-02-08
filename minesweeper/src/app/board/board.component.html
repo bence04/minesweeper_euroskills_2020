@@ -3,12 +3,9 @@
 
   <div class="wrapper">
     <div class="game-wrapper">
-      <div class="infos">
-          <button (click)="newGame()">New game</button>
-          <button (click)="showModal()">show modal</button>
-        <span style="color: white; font-size: 22px;"
-          >{{ timeInSec }} {{ allBombs }}</span
-        >
+      <div class="info-top" [ngStyle]="{'width': boardWidth + 'px'}">
+        <span class="timer"><i class="fas fa-stopwatch"></i> {{ timeDate }}</span>
+        <span class="bomb-count"><i class="fas fa-bomb"></i> {{ allBombs }}</span>
       </div>
       <div class="board">
         <div class="row" *ngFor="let row of gameMap; let rowIndex = index">
@@ -44,13 +41,21 @@
           </span>
         </div>
       </div>
+      <div class="info-bottom">
+          <div (click)="newGame()" class="new-game">New game</div>
+      </div>
     </div>
 
     <div class="high-score">
       <div class="high-score-table">
-        <div class="header">Top 5 players</div>
-        <div class="user" *ngFor="let user of highScore; let i = index">
-          {{ i + 1 }}. {{ user.name }} :: {{ user.time }}
+        <div class="header">Top players</div>
+        <div class="users">
+          <div *ngIf="highScore.length === 0">No saved results yet</div>
+            <div class="user" *ngFor="let user of highScore; let i = index">
+                <span class="rank">{{ i + 1 }}.</span>
+                <span class="name">{{ user.name }}</span>
+                <span class="time">{{ user.time }}s</span>
+              </div>
         </div>
       </div>
     </div>
