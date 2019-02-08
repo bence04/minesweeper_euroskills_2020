@@ -43,10 +43,7 @@ export class BoardComponent implements OnInit {
     this.initMap();
   }
   initMap() {
-    this.showEndOfGameModal = false;
-    this.showWinnerdModal = false;
-    this.showLostModal = false;
-    this.showOverlay = false;
+    this.resetModals();
     if (this.timerSubscription !== undefined) {
       this.resetTimer();
     }
@@ -58,7 +55,6 @@ export class BoardComponent implements OnInit {
     this.allBombs = 10;
     this.endOfGame = false;
     this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
-    console.log(this.boardWidth);
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
@@ -151,8 +147,15 @@ export class BoardComponent implements OnInit {
       })
       .slice(0, 5);
     localStorage.setItem('highscores', JSON.stringify(this.highScore));
+    this.resetModals();
+    this.gameFinnish();
+  }
+
+  resetModals() {
+    this.showEndOfGameModal = false;
+    this.showLostModal = false;
     this.showNewRecordModal = false;
     this.showOverlay = false;
-    this.gameFinnish();
+    this.showWinnerdModal = false;
   }
 }
