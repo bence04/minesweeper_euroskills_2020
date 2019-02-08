@@ -16,7 +16,7 @@
   justify-content: center;
 
   .game-start {
-    background: white;
+    background: #E8DFBA;
     border-radius: 15px;
     width: 300px;
     margin: 0;
@@ -41,7 +41,7 @@
 
         .field-size {
           font-size: 30px;
-          color: lightblue;
+          color: #2A374C;
           font-weight: bold;
 
           i {
@@ -56,17 +56,17 @@
         }
 
         &.selected {
-          background: rgb(220, 239, 248);
+          background: rgb(252, 236, 210);
         }
       }
 
       .button:hover {
-        background: rgb(220, 239, 248);
+        background: rgb(252, 236, 210);
       }
     }
 
     .start {
-      background: rgb(30, 163, 30);
+      background: #5A687D;
       height: 35px;
       width: 100%;
       border-bottom-left-radius: 15px;
