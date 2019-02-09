@@ -57,16 +57,18 @@ export class BoardComponent implements OnInit {
     this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
   }
 
+  countFlags() {
+    let flaggedCount = 0;
+    this.gameMap.forEach(val => {
+      flaggedCount += val.filter(x => x.isSelected === true).length;
+    });
+    this.allBombs = this.loginData.bombsCount - flaggedCount;
+  }
+
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
-    // minden click nél újra kell számolni -> find(selected true).length
-    // map size választó
     if (!this.endOfGame) {
-      if (item.isSelected) {
-        this.allBombs++;
-      } else {
-        this.allBombs--;
-      }
       this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
+      this.countFlags();
     } else {
       this.showEndOfGameModal = true;
       this.showOverlay = true;
@@ -96,6 +98,7 @@ export class BoardComponent implements OnInit {
           this.gameMap
         );
       }
+      this.countFlags();
       if (this.gameService.isLastClick(this.gameMap)) {
         this.timerSubscription.unsubscribe();
         if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
