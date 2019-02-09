@@ -2,7 +2,9 @@
 @import '../../assets/scss/colors';
 
 .wrapper {
+  animation: bg-change 30s linear infinite running alternate-reverse;
   background: $gradient-background;
+  background-size: 400% 400%;
   width: 100%;
   height: 100vh;
   display: flex;
@@ -10,7 +12,7 @@
   justify-content: center;
 
   .game-start {
-    background: $main-background;
+    background: #DCE1E9;
     border-radius: 15px;
     width: 300px;
     margin: 0;
@@ -56,12 +58,12 @@
         }
 
         &.selected {
-          background: $login-select;
+          background: #D9F0FF;
         }
       }
 
       .button:hover {
-        background: $login-select;
+        background: #D9F0FF;
       }
     }
 

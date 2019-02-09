@@ -52,12 +52,13 @@ export class BoardComponent implements OnInit {
       this.loginData.boardSize,
       this.loginData.bombsCount
     );
-    this.allBombs = 10;
+    this.allBombs = this.loginData.bombsCount;
     this.endOfGame = false;
     this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
+    // minden click nél újra kell számolni
     if (!this.endOfGame) {
       if (item.isSelected) {
         this.allBombs++;

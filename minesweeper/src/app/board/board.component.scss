@@ -1,17 +1,6 @@
 @import "../../assets/scss/keyframes";
 @import "../../assets/scss/colors";
 
-@keyframes bg-change {
-  0% {
-		background-position: 50% 0%
-	}
-	50% {
-		background-position: 50% 50%
-	}
-	100% {
-		background-position: 50% 0%
-	}
-}
 
 @for $i from 0 through 1000 {
   .stars:nth-child(#{$i}) {
@@ -60,7 +49,7 @@
 
       .info-top {
         margin-top: 26px;
-        color: white;
+        color: #A3D5FF;
         margin-bottom: 10px;
         font-size: 20px;
         animation: opacity-show 0.3s;
@@ -89,7 +78,7 @@
           text-align: center;
           padding: 10px;
           font-size: 18px;
-          color: white;
+          color: #A3D5FF;
           background: $dark-blue;
           margin-top: 20px;
           border: 1px solif $dark-blue;
@@ -126,7 +115,7 @@
               }
 
               &.opened {
-                background: $main-background;
+                background: #A3D5FF;
                 color: black;
                 animation: opacity-show 0.5s;
                 cursor: default;
@@ -134,7 +123,7 @@
 
               &.closed {
                 background: $dark-blue;
-                color: white;
+                color: #A3D5FF;
               }
             }
           }
@@ -159,7 +148,7 @@
         z-index: 250;
         width: 300px;
         word-wrap: break-word;
-        background: $main-background;
+        background: #DCE1E9;
         border-radius: 15px;
         padding-bottom: 15px;
 
