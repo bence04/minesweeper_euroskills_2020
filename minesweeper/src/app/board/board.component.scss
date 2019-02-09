@@ -73,12 +73,12 @@
 
       .info-bottom {
         animation: opacity-show 0.3s;
-        .new-game {
-          width: 200px;
+        .new-game, .change-board-size {
+          display: inline-block;
           text-align: center;
           padding: 10px;
           font-size: 18px;
-          color: $light-blue;
+          color: $main-background;
           background: $dark-blue;
           margin-top: 20px;
           border: 1px solif $dark-blue;
@@ -86,7 +86,11 @@
           cursor: pointer;
         }
 
-        .new-game:hover {
+        .change-board-size {
+          float: right;
+        }
+
+        .new-game:hover, .change-board-size:hover {
           background: $dark-blue-hover;
         }
       }

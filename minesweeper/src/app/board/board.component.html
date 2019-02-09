@@ -29,8 +29,9 @@
           </span>
         </div>
       </div>
-      <div class="info-bottom">
+      <div class="info-bottom" [ngStyle]="{ width: boardWidth + 'px' }">
         <div (click)="newGame()" class="new-game">New game</div>
+        <div (click)="changeBoard()" class="change-board-size">Change board size</div>
       </div>
     </div>
 

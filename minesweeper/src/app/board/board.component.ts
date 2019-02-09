@@ -58,7 +58,8 @@ export class BoardComponent implements OnInit {
   }
 
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
-    // minden click nél újra kell számolni
+    // minden click nél újra kell számolni -> find(selected true).length
+    // map size választó
     if (!this.endOfGame) {
       if (item.isSelected) {
         this.allBombs++;
@@ -159,4 +160,9 @@ export class BoardComponent implements OnInit {
     this.showOverlay = false;
     this.showWinnerdModal = false;
   }
+
+  changeBoard() {
+    this.loginData.isLogged = false;
+  }
+
 }
