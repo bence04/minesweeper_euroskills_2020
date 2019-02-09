@@ -49,7 +49,7 @@
 
       .info-top {
         margin-top: 26px;
-        color: #A3D5FF;
+        color: $light-blue;
         margin-bottom: 10px;
         font-size: 20px;
         animation: opacity-show 0.3s;
@@ -78,7 +78,7 @@
           text-align: center;
           padding: 10px;
           font-size: 18px;
-          color: #A3D5FF;
+          color: $light-blue;
           background: $dark-blue;
           margin-top: 20px;
           border: 1px solif $dark-blue;
@@ -115,15 +115,15 @@
               }
 
               &.opened {
-                background: #A3D5FF;
-                color: black;
+                background: $light-blue;
+                color: $dark-blue;
                 animation: opacity-show 0.5s;
                 cursor: default;
               }
 
               &.closed {
                 background: $dark-blue;
-                color: #A3D5FF;
+                color: $light-blue;
               }
             }
           }
@@ -148,7 +148,7 @@
         z-index: 250;
         width: 300px;
         word-wrap: break-word;
-        background: #DCE1E9;
+        background: $main-background;
         border-radius: 15px;
         padding-bottom: 15px;
 

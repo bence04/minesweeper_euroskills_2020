@@ -12,7 +12,7 @@
   justify-content: center;
 
   .game-start {
-    background: #DCE1E9;
+    background: $main-background;
     border-radius: 15px;
     width: 300px;
     margin: 0;
@@ -58,12 +58,12 @@
         }
 
         &.selected {
-          background: #D9F0FF;
+          background: $login-select;
         }
       }
 
       .button:hover {
-        background: #D9F0FF;
+        background: $login-select;
       }
     }
 
@@ -73,7 +73,7 @@
       width: 100%;
       border-bottom-left-radius: 15px;
       border-bottom-right-radius: 15px;
-      color: white;
+      color: $light-blue  ;
       cursor: pointer;
       text-align: center;
       padding-top: 15px;
