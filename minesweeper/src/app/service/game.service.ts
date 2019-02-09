@@ -94,4 +94,11 @@ export class GameService {
       (_, i) => array.slice(i * columnLength, i * columnLength + columnLength)
     );
   }
+
+  getHighscore() {
+    const getScoreStr = localStorage.getItem('highscores');
+    if (getScoreStr !== null) {
+      return JSON.parse(getScoreStr);
+    }
+  }
 }
