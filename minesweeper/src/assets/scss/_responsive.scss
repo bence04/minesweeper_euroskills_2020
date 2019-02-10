@@ -1,0 +1,29 @@
+@media all and (max-width: 800px) {
+  .wrapper {
+    flex-direction: column;
+
+    .game-wrapper {
+      width: 100% !important;
+
+      /deep/ .bigger {
+        width: 30px !important;
+        height: 30px !important;
+      }
+
+      .info-bottom {
+        margin-top: 20px !important;
+        .new-game, .change-board-size {
+          display: block !important;
+          width: 100%;
+          padding: 14px 0 !important;
+        }
+      }
+
+    }
+
+    .high-score {
+      margin: 100px 0px;
+      width: 100% !important;
+    }
+  }
+}

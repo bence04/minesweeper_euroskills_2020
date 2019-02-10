@@ -2,7 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { GameFieldEnum } from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
-import { LoginDataModel, GameFieldModel, HighScoreModel } from '../model/game.model';
+import {
+  LoginDataModel,
+  GameFieldModel,
+  HighScoreModel
+} from '../model/game.model';
+import { HostListener } from '@angular/core';
 
 @Component({
   selector: 'app-board',
@@ -26,8 +31,20 @@ export class BoardComponent implements OnInit {
   timerSubscription: Subscription;
   highScore: HighScoreModel[] = [];
   boardWidth = 0;
+  starsNumber = 0;
+  screenHeight: number;
+  screenWidth: number;
 
-  constructor(private gameService: GameService) {}
+  constructor(private gameService: GameService) {
+    this.getScreenSize();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?) {
+    this.screenHeight = window.innerHeight;
+    this.screenWidth = window.innerWidth;
+    this.starsNumber = (this.screenWidth < 800) ? 200 : 600;
+  }
 
   ngOnInit() {
     this.highScore = this.gameService.getHighscore();
@@ -57,7 +74,11 @@ export class BoardComponent implements OnInit {
     );
     this.allBombs = this.loginData.bombsCount;
     this.endOfGame = false;
-    this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
+    if (this.screenWidth < 800) {
+      this.boardWidth = this.loginData.boardSize === 9 ? this.loginData.boardSize * 34 : this.loginData.boardSize * 29;
+    } else {
+      this.boardWidth = this.loginData.boardSize === 9 ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
+    }
   }
 
   /**
@@ -86,19 +107,28 @@ export class BoardComponent implements OnInit {
    */
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
-
-      if (this.timerSubscription === undefined) { this.timerStart(); }
+      if (this.timerSubscription === undefined) {
+        this.timerStart();
+      }
       if (item.value === GameFieldEnum.BOMB) {
         this.showLostModal = true;
         this.showOverlay = true;
         this.gameFinnish();
       } else {
-        this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
+        this.gameService.showEmptyNeighbours(
+          rowIndex,
+          columnIndex,
+          this.gameMap
+        );
       }
 
       if (this.gameService.isLastClick(this.gameMap)) {
         this.timerSubscription.unsubscribe();
-        if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
+        if (
+          this.highScore.length !== 0 &&
+          (this.highScore.length < 5 ||
+            this.timeInSec < this.highScore[this.highScore.length - 1].time)
+        ) {
           this.showNewRecordModal = true;
         } else if (this.highScore.length === 0) {
           this.showNewRecordModal = true;
@@ -120,9 +150,11 @@ export class BoardComponent implements OnInit {
    * Run when games ended
    */
   gameFinnish() {
-    this.gameMap.map(e => e.map(
-      el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
-    ));
+    this.gameMap.map(e =>
+      e.map(
+        el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
+      )
+    );
     this.allBombs = this.loginData.bombsCount;
     this.endOfGame = true;
     this.resetTimer();
@@ -132,13 +164,14 @@ export class BoardComponent implements OnInit {
    * Timers start
    */
   timerStart() {
-    this.timerSubscription = timer(0, 1000).subscribe(
-      val => {
-        this.timeInSec = val;
-        const minutes: number = Math.floor(this.timeInSec / 60);
-        this.timeDate = minutes.toString().padStart(2, '0') + ':' + (this.timeInSec - minutes * 60).toString().padStart(2, '0');
-      }
-    );
+    this.timerSubscription = timer(0, 1000).subscribe(val => {
+      this.timeInSec = val;
+      const minutes: number = Math.floor(this.timeInSec / 60);
+      this.timeDate =
+        minutes.toString().padStart(2, '0') +
+        ':' +
+        (this.timeInSec - minutes * 60).toString().padStart(2, '0');
+    });
   }
 
   /**
@@ -155,11 +188,14 @@ export class BoardComponent implements OnInit {
    * Saves new record
    */
   saveNewRecord() {
-    this.userName = (this.userName !== undefined) ? this.userName : 'Unknown player';
+    this.userName =
+      this.userName !== undefined ? this.userName : 'Unknown player';
     this.highScore.push({ name: this.userName, time: this.timeInSec });
-    this.highScore = this.highScore.sort(function(e1, e2) {
-      return e1.time - e2.time;
-    }).slice(0, 5);
+    this.highScore = this.highScore
+      .sort(function(e1, e2) {
+        return e1.time - e2.time;
+      })
+      .slice(0, 5);
     localStorage.setItem('highscores', JSON.stringify(this.highScore));
     this.resetModals();
     this.gameFinnish();
