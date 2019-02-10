@@ -12,12 +12,6 @@ import { LoginDataModel, GameFieldModel, HighScoreModel } from '../model/game.mo
 export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
 
-  /* TODO:
-     service átalakítása
-     típusok használata
-     dokumentáció
-     kommentek */
-
   gameMap: GameFieldModel[][];
   endOfGame = false;
   userName: string;

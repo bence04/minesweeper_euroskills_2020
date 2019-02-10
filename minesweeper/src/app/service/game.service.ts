@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GameFieldEnum } from '../model/game.enum';
 import { HttpClient } from '@angular/common/http';
-import { GameFieldModel, GameConfig } from '../model/game.model';
+import { GameFieldModel, GameConfig, HighScoreModel } from '../model/game.model';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,7 @@ export class GameService {
 
   constructor(private http: HttpClient) {}
 
-  generateMap(row: number, column: number, bombs: number) {
+  generateMap(row: number, column: number, bombs: number): GameFieldModel[][] {
     let initGameMap = new Array(row * column);
     initGameMap.fill(this.emptyModel);
     initGameMap.fill(this.bombModel, 0, bombs);
@@ -28,7 +29,7 @@ export class GameService {
     return this.calculateFieldValue(initGameMap);
   }
 
-  calculateFieldValue(array: GameFieldModel[][]) {
+  calculateFieldValue(array: GameFieldModel[][]): GameFieldModel[][] {
     return array.map((_, rowIndex: number) =>
       _.map((column: GameFieldModel, columnINdex: number) => {
         if (column.value !== GameFieldEnum.BOMB) {
@@ -48,7 +49,7 @@ export class GameService {
     );
   }
 
-  showEmptyNeighbours(row: number, col: number, board: GameFieldModel[][]) {
+  showEmptyNeighbours(row: number, col: number, board: GameFieldModel[][]): void {
     const element = board[row][col];
     if (element == null || element.isClicked) { return; }
     element.isClicked = true;
@@ -65,13 +66,13 @@ export class GameService {
     }
   }
 
-  isLastClick(board: GameFieldModel[][]) {
+  isLastClick(board: GameFieldModel[][]): boolean {
     return board.map(row =>
       row.filter(x => x.isClicked === false && x.value !== GameFieldEnum.BOMB)
     ).filter(x => x.length !== 0).length === 0;
   }
 
-  countBombs(row: number, col: number, board: GameFieldModel[][]) {
+  countBombs(row: number, col: number, board: GameFieldModel[][]): number {
     let cnt = 0;
     for (let i = row - 1; i <= row + 1; i++) {
       for (let j = col - 1; j <= col + 1; j++) {
@@ -83,7 +84,7 @@ export class GameService {
     return cnt;
   }
 
-  shuffleArray(array: GameFieldEnum[]) {
+  shuffleArray(array: GameFieldEnum[]): number[] {
     return array
       .map(a => [Math.random(), a])
       .sort((a, b) => a[0] - b[0])
@@ -103,7 +104,7 @@ export class GameService {
   * @param bar This is the bar parameter
   * @returns returns a string version of bar
   */
-  getHighscore() {
+  getHighscore(): HighScoreModel[] {
     const getScoreStr = localStorage.getItem('highscores');
     if (getScoreStr !== null) {
       return JSON.parse(getScoreStr);
@@ -111,7 +112,7 @@ export class GameService {
     return [];
   }
 
-  readConfigJson() {
+  readConfigJson(): Observable<GameConfig[]> {
     return this.http.get<GameConfig[]>('./assets/config.json');
   }
 }

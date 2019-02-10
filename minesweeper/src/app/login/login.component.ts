@@ -1,23 +1,30 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { LoginDataModel, GameConfig } from '../model/game.model';
 import { GameService } from '../service/game.service';
+import { Subject, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
   @Input() loginData: LoginDataModel;
   @Output() loginDataChange = new EventEmitter<LoginDataModel>();
+  readConfig: Subscription;
   config: GameConfig[];
   boardSize: number;
   bombsCount: number;
 
-  constructor(private service: GameService) {
-    this.service.readConfigJson().subscribe(val => {
+  constructor(private service: GameService) {}
+
+  ngOnInit(): void {
+    this.readConfig = this.service.readConfigJson().subscribe(val => {
       this.config = val;
     });
+  }
+  ngOnDestroy(): void {
+    this.readConfig.unsubscribe();
   }
 
   selectSize(boardSize: number, bombsCount: number) {
