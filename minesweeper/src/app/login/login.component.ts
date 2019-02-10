@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { LoginDataModel, GameConfig } from '../model/game.enum';
+import { LoginDataModel, GameConfig } from '../model/game.model';
 import { GameService } from '../service/game.service';
 
 @Component({

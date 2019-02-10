@@ -1,8 +1,7 @@
 import { Injectable } from '@angular/core';
-import { GameFieldEnum, GameFieldModel, GameConfig } from '../model/game.enum';
+import { GameFieldEnum } from '../model/game.enum';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { GameFieldModel, GameConfig } from '../model/game.model';
 
 @Injectable({
   providedIn: 'root'

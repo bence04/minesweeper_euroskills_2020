@@ -1,13 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
-import {
-  GameFieldModel,
-  HighScoreModel,
-  GameFieldEnum,
-  LoginDataModel
-} from '../model/game.enum';
+import { GameFieldEnum } from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
-import { componentFactoryName } from '@angular/compiler';
+import { LoginDataModel, GameFieldModel, HighScoreModel } from '../model/game.model';
 
 @Component({
   selector: 'app-board',
@@ -18,8 +13,8 @@ export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
 
   /* TODO:
-     modal component (?)
-     info component (am modal)
+     service átalakítása
+     típusok használata
      dokumentáció
      kommentek */
 

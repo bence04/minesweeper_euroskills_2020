@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { HighScoreModel } from '../model/game.enum';
+import { HighScoreModel } from '../model/game.model';
 
 @Component({
   selector: 'app-high-score',

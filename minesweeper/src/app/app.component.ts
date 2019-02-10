@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { LoginDataModel } from './model/game.enum';
+import { LoginDataModel } from './model/game.model';
 
 @Component({
   selector: 'app-root',
