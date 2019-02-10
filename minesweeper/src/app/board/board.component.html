@@ -35,19 +35,7 @@
       </div>
     </div>
 
-    <div class="high-score">
-      <div class="high-score-table">
-        <div class="header">Top players</div>
-        <div class="users">
-          <div *ngIf="highScore.length === 0">No saved results yet</div>
-          <div class="user" *ngFor="let user of highScore; let i = index">
-            <span class="rank">{{ i + 1 }}.</span>
-            <span class="name">{{ user.name }}</span>
-            <span class="time">{{ user.time }}s</span>
-          </div>
-        </div>
-      </div>
-    </div>
+    <app-high-score class="high-score" [highScore]="highScore"></app-high-score>
   </div>
 </div>
 

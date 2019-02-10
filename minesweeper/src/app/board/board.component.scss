@@ -151,51 +151,6 @@
       align-items: center;
       justify-content: center;
       animation: opacity-show 0.3s;
-
-      .high-score-table {
-        z-index: 250;
-        width: 300px;
-        word-wrap: break-word;
-        background: $main-background;
-        border-radius: 15px;
-        padding-bottom: 15px;
-
-        .header {
-          padding: 15px 30px;
-          border-bottom: 1px solid rgb(160, 160, 160);
-          text-align: center;
-          font-weight: bold;
-          font-size: 20px;
-        }
-
-        .users {
-          padding: 8px 30px;
-
-          .user {
-            margin-bottom: 8px;
-            margin-top: 8px;
-
-            .rank {
-              width: 30px;
-              display: inline-block;
-            }
-
-            .name {
-              width: 160px;
-              display: inline-block;
-            }
-
-            .time {
-              width: 40px;
-              display: inline-block;
-            }
-
-            &:first-child {
-              font-weight: bold;
-            }
-          }
-        }
-      }
     }
   }
 }

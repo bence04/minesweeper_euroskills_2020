@@ -17,6 +17,12 @@ import { componentFactoryName } from '@angular/compiler';
 export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
 
+  /* TODO: highscore component
+     modal component (?)
+     info component (am modal)
+     config json (map méret, bombaszám) login onnan generáljon -> bármekkora pálya
+     dokumentáció
+     kommentek */
 
   gameMap: GameFieldModel[][];
   endOfGame = false;
