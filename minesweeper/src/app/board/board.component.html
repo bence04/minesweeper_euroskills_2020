@@ -21,7 +21,6 @@
             </span>
             <span class="item closed" *ngIf="!item.isClicked && !item.isSelected" (contextmenu)="selectField(item, rowIndex, columnIndex)" (click)="clickField(item, rowIndex, columnIndex)" [ngClass]="{ bigger: row.length === 9 }">
               &nbsp;
-              <span *ngIf="item.value === -1">B</span>
             </span>
             <span class="item opened" *ngIf="item.isSelected && !endOfGame" (contextmenu)="selectField(item, rowIndex, columnIndex)" [ngClass]="{ bigger: row.length === 9 }">
               <i class="fas fa-flag"></i>

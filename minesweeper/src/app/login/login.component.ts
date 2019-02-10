@@ -1,5 +1,5 @@
 import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
-import { LoginDataModel, GameConfig } from '../model/game.model';
+import { LoginDataModel, GameConfigModel } from '../model/game.model';
 import { GameService } from '../service/game.service';
 import { Subject, Subscription } from 'rxjs';
 
@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   @Input() loginData: LoginDataModel;
   @Output() loginDataChange = new EventEmitter<LoginDataModel>();
   readConfig: Subscription;
-  config: GameConfig[];
+  config: GameConfigModel[];
   boardSize: number;
   bombsCount: number;
 

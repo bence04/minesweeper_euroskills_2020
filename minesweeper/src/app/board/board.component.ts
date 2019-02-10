@@ -34,10 +34,17 @@ export class BoardComponent implements OnInit {
     this.initMap();
   }
 
+  /**
+   * Start new game
+   */
   newGame() {
     this.highScore = this.gameService.getHighscore();
     this.initMap();
   }
+
+  /**
+   * Inits map
+   */
   initMap() {
     this.resetModals();
     if (this.timerSubscription !== undefined) {
@@ -53,14 +60,13 @@ export class BoardComponent implements OnInit {
     this.boardWidth = (this.loginData.boardSize === 9) ? this.loginData.boardSize * 44 : this.loginData.boardSize * 29;
   }
 
-  countFlags() {
-    let flaggedCount = 0;
-    this.gameMap.forEach(val => {
-      flaggedCount += val.filter(x => x.isSelected === true).length;
-    });
-    this.allBombs = this.loginData.bombsCount - flaggedCount;
-  }
-
+  /**
+   * Run when user right-click to element
+   * @param item - Clicked element
+   * @param rowIndex - Clciked element row index
+   * @param columnIndex - Clciked element column index
+   * @returns Disable default context menu
+   */
   selectField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
       this.gameMap[rowIndex][columnIndex].isSelected = !item.isSelected;
@@ -72,21 +78,25 @@ export class BoardComponent implements OnInit {
     return false;
   }
 
+  /**
+   * Run when user click to element
+   * @param item - Clicked element
+   * @param rowIndex - Clciked element row index
+   * @param columnIndex - Clciked element column index
+   */
   clickField(item: GameFieldModel, rowIndex: number, columnIndex: number) {
     if (!this.endOfGame) {
-      if (this.timerSubscription === undefined) {
-        this.timerStart();
-      }
+
+      if (this.timerSubscription === undefined) { this.timerStart(); }
       if (item.value === GameFieldEnum.BOMB) {
-        this.gameFinnish();
         this.showLostModal = true;
         this.showOverlay = true;
+        this.gameFinnish();
       } else {
         this.gameService.showEmptyNeighbours(rowIndex, columnIndex, this.gameMap);
       }
-      this.countFlags();
+
       if (this.gameService.isLastClick(this.gameMap)) {
-        this.showOverlay = true;
         this.timerSubscription.unsubscribe();
         if (this.highScore.length !== 0 && (this.highScore.length < 5 || this.timeInSec < this.highScore[this.highScore.length - 1].time)) {
           this.showNewRecordModal = true;
@@ -96,24 +106,31 @@ export class BoardComponent implements OnInit {
           this.showWinnerdModal = true;
           this.gameFinnish();
         }
+        this.showOverlay = true;
       }
+
+      this.countFlags();
     } else {
       this.showEndOfGameModal = true;
       this.showOverlay = true;
     }
   }
 
+  /**
+   * Run when games ended
+   */
   gameFinnish() {
-    this.gameMap.map(e =>
-      e.map(
-        el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
-      )
-    );
+    this.gameMap.map(e => e.map(
+      el => (el.isClicked = el.value === GameFieldEnum.BOMB || el.isClicked)
+    ));
     this.allBombs = this.loginData.bombsCount;
-    this.resetTimer();
     this.endOfGame = true;
+    this.resetTimer();
   }
 
+  /**
+   * Timers start
+   */
   timerStart() {
     this.timerSubscription = timer(0, 1000).subscribe(
       val => {
@@ -124,6 +141,9 @@ export class BoardComponent implements OnInit {
     );
   }
 
+  /**
+   * Reset timer and unsubscribe
+   */
   resetTimer() {
     this.timerSubscription.unsubscribe();
     this.timerSubscription = undefined;
@@ -131,6 +151,9 @@ export class BoardComponent implements OnInit {
     this.timeDate = '00:00';
   }
 
+  /**
+   * Saves new record
+   */
   saveNewRecord() {
     this.userName = (this.userName !== undefined) ? this.userName : 'Unknown player';
     this.highScore.push({ name: this.userName, time: this.timeInSec });
@@ -142,6 +165,9 @@ export class BoardComponent implements OnInit {
     this.gameFinnish();
   }
 
+  /**
+   * Hide all modals
+   */
   resetModals() {
     this.showEndOfGameModal = false;
     this.showLostModal = false;
@@ -150,8 +176,21 @@ export class BoardComponent implements OnInit {
     this.showWinnerdModal = false;
   }
 
+  /**
+   * Load login screen
+   */
   changeBoard() {
     this.loginData.isLogged = false;
   }
 
+  /**
+   * Counts flags
+   */
+  countFlags() {
+    let flaggedCount = 0;
+    this.gameMap.forEach(val => {
+      flaggedCount += val.filter(x => x.isSelected === true).length;
+    });
+    this.allBombs = this.loginData.bombsCount - flaggedCount;
+  }
 }
