@@ -18,7 +18,6 @@ export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
 
   /* TODO:
-     config json (map méret, bombaszám) login onnan generáljon -> bármekkora pálya
      modal component (?)
      info component (am modal)
      dokumentáció
@@ -144,6 +143,7 @@ export class BoardComponent implements OnInit {
   }
 
   saveNewRecord() {
+    this.userName = (this.userName !== undefined) ? this.userName : 'Unknown player';
     this.highScore.push({ name: this.userName, time: this.timeInSec });
     this.highScore = this.highScore.sort(function(e1, e2) {
       return e1.time - e2.time;

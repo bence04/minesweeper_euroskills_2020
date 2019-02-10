@@ -6,17 +6,5 @@
   {
     "boardSize": 16,
     "bombsCount": 40
-  },
-  {
-    "boardSize": 30,
-    "bombsCount": 100
-  },
-  {
-    "boardSize": 25,
-    "bombsCount": 5
-  },
-  {
-    "boardSize": 4,
-    "bombsCount": 1
   }
 ]
