@@ -2,7 +2,7 @@
 @import "../../assets/scss/colors";
 
 
-@for $i from 0 through 1000 {
+@for $i from 0 through 600 {
   .stars:nth-child(#{$i}) {
     $size: random(3);
     width: $size + px;
@@ -123,6 +123,10 @@
                 color: $dark-blue;
                 animation: opacity-show 0.5s;
                 cursor: default;
+
+                .fas {
+                  line-height: normal !important;
+                }
               }
 
               &.closed {
@@ -184,6 +188,10 @@
             .time {
               width: 40px;
               display: inline-block;
+            }
+
+            &:first-child {
+              font-weight: bold;
             }
           }
         }

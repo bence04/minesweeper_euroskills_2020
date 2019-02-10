@@ -5,12 +5,14 @@ import { AppComponent } from './app.component';
 import { BoardComponent } from './board/board.component';
 import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { HighScoreComponent } from './high-score/high-score.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardComponent,
-    LoginComponent
+    LoginComponent,
+    HighScoreComponent
   ],
   imports: [
     ReactiveFormsModule,

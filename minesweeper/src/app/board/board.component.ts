@@ -7,6 +7,7 @@ import {
 } from '../model/game.enum';
 import { Subscription, timer } from 'rxjs';
 import { GameService } from '../service/game.service';
+import { componentFactoryName } from '@angular/compiler';
 
 @Component({
   selector: 'app-board',
@@ -15,6 +16,7 @@ import { GameService } from '../service/game.service';
 })
 export class BoardComponent implements OnInit {
   @Input() loginData: LoginDataModel;
+
 
   gameMap: GameFieldModel[][];
   endOfGame = false;
