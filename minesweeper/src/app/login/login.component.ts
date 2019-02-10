@@ -28,8 +28,8 @@ export class LoginComponent {
   startGame() {
     this.loginDataChange.emit({
       isLogged: true,
-      boardSize: this.boardSize,
-      bombsCount: this.bombsCount
+      boardSize: (this.boardSize === undefined) ? 9 : this.boardSize,
+      bombsCount: (this.bombsCount === undefined) ? 10 : this.bombsCount
     });
   }
 
