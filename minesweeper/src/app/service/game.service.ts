@@ -97,6 +97,12 @@ export class GameService {
     );
   }
 
+  /**
+  * This is the foo function
+  *
+  * @param bar This is the bar parameter
+  * @returns returns a string version of bar
+  */
   getHighscore() {
     const getScoreStr = localStorage.getItem('highscores');
     if (getScoreStr !== null) {
