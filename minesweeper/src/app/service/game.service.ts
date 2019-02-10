@@ -100,5 +100,6 @@ export class GameService {
     if (getScoreStr !== null) {
       return JSON.parse(getScoreStr);
     }
+    return [];
   }
 }
