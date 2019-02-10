@@ -27,3 +27,8 @@ export interface LoginDataModel {
   boardSize: number;
   bombsCount: number;
 }
+
+export interface GameConfig {
+  boardSize: number;
+  bombsCount: number;
+}

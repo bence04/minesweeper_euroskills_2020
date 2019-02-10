@@ -7,13 +7,11 @@
         <em>Select a board size and click to "Start game" button!</em>
     </div>
     <div class="content">
-      <div class="button" (click)="selected = 1" [ngClass]="{ selected: selected === 1 }" >
-        <span class="field-size"><i class="fas fa-chess-board"></i> 9x9</span>
-        <span class="bomb-count">10 <i class="fas fa-bomb"></i></span>
-      </div>
-      <div class="button" (click)="selected = 2" [ngClass]="{ selected: selected === 2 }" >
-        <span class="field-size"><i class="fas fa-chess-board"></i> 16x16</span>
-        <span class="bomb-count">40 <i class="fas fa-bomb"></i></span>
+      <div *ngFor="let board of config">
+        <div class="button" (click)="selectSize(board.boardSize, board.bombsCount)" [ngClass]="{ selected: boardSize === board.boardSize }">
+          <span class="field-size"><i class="fas fa-chess-board"></i> {{ board.boardSize }}x{{ board.boardSize }}</span>
+          <span class="bomb-count">{{ board.bombsCount }} <i class="fas fa-bomb"></i></span>
+        </div>
       </div>
     </div>
     <div class="start" (click)="startGame()">

@@ -136,7 +136,7 @@
             }
           }
 
-          @for $i from 1 through 17 * 17 {
+          @for $i from 1 through 50 * 50 {
             .column-index-#{$i} {
               animation-delay: #{$i / 60}s;
               animation-fill-mode: both;

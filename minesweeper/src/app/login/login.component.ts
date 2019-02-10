@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
-import { LoginDataModel } from '../model/game.enum';
+import { LoginDataModel, GameConfig } from '../model/game.enum';
+import { GameService } from '../service/game.service';
 
 @Component({
   selector: 'app-login',
@@ -9,24 +10,27 @@ import { LoginDataModel } from '../model/game.enum';
 export class LoginComponent {
   @Input() loginData: LoginDataModel;
   @Output() loginDataChange = new EventEmitter<LoginDataModel>();
-  selected = 0;
+  config: GameConfig[];
+  boardSize: number;
+  bombsCount: number;
 
-  constructor() {}
+  constructor(private service: GameService) {
+    this.service.readConfigJson().subscribe(val => {
+      this.config = val;
+    });
+  }
+
+  selectSize(boardSize: number, bombsCount: number) {
+    this.boardSize = boardSize;
+    this.bombsCount = bombsCount;
+  }
 
   startGame() {
-    if (this.selected === 1) {
-      this.loginDataChange.emit({
-        isLogged: true,
-        boardSize: 9,
-        bombsCount: 10
-      });
-    } else {
-      this.loginDataChange.emit({
-        isLogged: true,
-        boardSize: 16,
-        bombsCount: 40
-      });
-    }
+    this.loginDataChange.emit({
+      isLogged: true,
+      boardSize: this.boardSize,
+      bombsCount: this.bombsCount
+    });
   }
 
 }

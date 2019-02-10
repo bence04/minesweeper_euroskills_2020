@@ -1,5 +1,8 @@
 import { Injectable } from '@angular/core';
-import { GameFieldEnum, GameFieldModel } from '../model/game.enum';
+import { GameFieldEnum, GameFieldModel, GameConfig } from '../model/game.enum';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +19,7 @@ export class GameService {
     isSelected: false
   };
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   generateMap(row: number, column: number, bombs: number) {
     let initGameMap = new Array(row * column);
@@ -101,5 +104,9 @@ export class GameService {
       return JSON.parse(getScoreStr);
     }
     return [];
+  }
+
+  readConfigJson() {
+    return this.http.get<GameConfig[]>('./assets/config.json');
   }
 }
