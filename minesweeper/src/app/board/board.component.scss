@@ -120,7 +120,7 @@
               }
 
               &.opened {
-                background: /* $light-blue; */ $main-background;
+                background: $light-blue;
                 color: $dark-blue;
                 animation: opacity-show 0.5s;
                 cursor: default;
